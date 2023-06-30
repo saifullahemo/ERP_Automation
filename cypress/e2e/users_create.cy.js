@@ -1,11 +1,22 @@
 import './commands';
 import 'cypress-file-upload';
 
-describe('User Creation', () => {
+describe('User login', () => {
   beforeEach(() => {
     cy.login();
     cy.wait(4000);
   });
+
+  function selectRandomStore() {
+    // Get all the options in the stores dropdown
+    cy.get('.vs__dropdown-option').then(($options) => {
+      // Select a random option index
+      const randomIndex = Math.floor(Math.random() * $options.length);
+      // Click on the randomly selected option
+      cy.wrap($options[randomIndex]).click();
+    });
+  }
+  
 
   it('should be created successfully', () => {
     const fullName = 'testing';
@@ -73,8 +84,11 @@ describe('User Creation', () => {
     cy.get('#payrate').type(payRate);
 
     // Selecting store
+    // cy.get('#vs1__combobox').click();
+   // cy.contains('.vs__dropdown-option', selectedStore).click();
+
     cy.get('#vs1__combobox').click();
-    cy.contains('.vs__dropdown-option', selectedStore).click();
+    selectRandomStore();
 
     // Upload file
     cy.get('.media-aside').invoke('removeAttr', 'style');
