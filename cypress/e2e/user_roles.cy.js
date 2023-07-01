@@ -7,9 +7,6 @@ describe('User login', () => {
   });
 
   it('should create the USER role successfully', () => {
-  //  const firstDropdownOptionIndex = 1; // Index of the desired option in the first dropdown
-  //  const secondDropdownOptionIndex = 1; // Index of the desired option in the second dropdown
-
     cy.contains('.menu-title', 'User Management').click(); // Click on user management
     cy.wait(3000);
 
@@ -18,9 +15,12 @@ describe('User login', () => {
 
     // Get all the options in the first dropdown
     cy.get('#vs1__combobox').click();
+
     cy.get('.vs__dropdown-option').then($options => {
+
       // Generate a random index within the range of available options
       const randomIndex = Cypress._.random(0, $options.length - 1);
+
       // Select the random option
       cy.wrap($options[randomIndex]).click();
     });
