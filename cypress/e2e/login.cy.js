@@ -1,6 +1,6 @@
 import './commands'
 
-describe('Login Test', () => {
+describe('Login', () => {
   beforeEach(() => {
     cy.login();
   });

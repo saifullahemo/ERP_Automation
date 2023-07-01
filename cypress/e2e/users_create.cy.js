@@ -32,7 +32,6 @@ describe('User login', () => {
     const country = 'Bangladesh';
     const tfn = '120012';
     const payRate = '12000';
-    const selectedStore = 'IFAD STORE';
     const fileName = 'bank.jpg';
 
     cy.visit('/');
@@ -83,17 +82,13 @@ describe('User login', () => {
     cy.get('#tfn').type(tfn);
     cy.get('#payrate').type(payRate);
 
-    // Selecting store
-    // cy.get('#vs1__combobox').click();
-   // cy.contains('.vs__dropdown-option', selectedStore).click();
-
     cy.get('#vs1__combobox').click();
     selectRandomStore();
 
     // Upload file
-    cy.get('.media-aside').invoke('removeAttr', 'style');
+    cy.get('.btn').invoke('removeAttr', 'style');
     cy.fixture(fileName, 'binary').then(fileContent => {
-      cy.get('.media-aside').attachFile({
+      cy.get('.btn').attachFile({
         fileContent,
         fileName,
         mimeType: 'image/jpeg'
@@ -105,5 +100,31 @@ describe('User login', () => {
 
     // Add user
     cy.contains('.btn-primary', 'Add').click();
+
+    //search user 
+    cy.get('#__BVID__391').type('Testing');
+    cy.get('#dropdown-right__BV_toggle_').click({ multiple: true } );
+
+    //Edit user info
+    cy.get('#dropdown-right > .dropdown-menu > :nth-child(2) > .dropdown-item').eq(0).click();
+    cy.wait(3000);
+
+    // fill up the form
+    cy.get('#full-name').clear();
+    cy.get('#full-name').type('Bir dash');
+
+    cy.get('#surname').clear();
+    cy.get('#surname').type('Thakkar');
+
+    cy.get('#tfn').clear();
+    cy.get('#tfn').type('12345');
+
+    cy.get('#payrate').clear();
+    cy.get('#payrate').type('1234')
+
+    cy.get('form > .mb-sm-0').click();
+
+
+    
   });
 });
