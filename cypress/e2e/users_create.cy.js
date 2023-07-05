@@ -19,9 +19,24 @@ describe('User login', () => {
   
 
   it('should be created successfully', () => {
-    const fullName = 'testing';
-    const surname = 'user';
-    const email = 'testinguser@test.com';
+
+    // Generate a random string to append to the base email
+  const randomString = Math.random().toString(36).substring(7);
+  // Base email address
+  const baseEmail = 'testinguser@test.com';
+  // Unique email by appending random string
+  const email = `${randomString}_${baseEmail}`;
+  // Generate unique values for each run
+  // const timestamp = new Date().getTime();
+  //const uniqueEmail = `testinguser${timestamp}@test.com`;
+  const baseName = "John";
+  const fullName = `${randomString}_${baseName}`;
+  const surname = "Doe";
+  //const surname = `${randomString}_${basesurName}`;
+
+    //const fullName = 'testing';
+    //const surname = 'user';
+    //const email = 'testinguser@test.com';
     const selectedDate = '25';
     const mobileNumber = '01712343434';
     const phoneNumber = '01712343434';
@@ -100,9 +115,10 @@ describe('User login', () => {
 
     // Add user
     cy.contains('.btn-primary', 'Add').click();
+    cy.wait(5000);
 
     //search user 
-    cy.get('#__BVID__391').type('Testing');
+    cy.get('#__BVID__391').type(`${fullName}`);
     cy.get('#dropdown-right__BV_toggle_').click({ multiple: true } );
 
     //Edit user info
