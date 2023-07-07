@@ -119,6 +119,7 @@ describe('User login', () => {
 
     //search user 
     cy.get('#__BVID__391').type(`${fullName}`);
+
     cy.get('#dropdown-right__BV_toggle_').click({ multiple: true } );
 
     //Edit user info
@@ -153,11 +154,27 @@ describe('User login', () => {
 
     //
     // cy.get('#mobile > .flex-1 > .input-tel > .input-tel__label')
-    cy.get('#mobile-872_phone_number').clear();
-    cy.get('#mobile-872_phone_number').type("01517800888");
-    cy.get('#edit-user-address-line-1').clear();
-    cy.get('#edit-user-address-line-1').type("Alam Nagar").eq(0).click();
-    //cy.get('.col > .mb-1', "Save Changes").click();
-    cy.get('.btn', "Save Changes").click();
+    cy.get('[id^="mobile-"][id$="_phone_number"]').clear();
+cy.get('[id^="mobile-"][id$="_phone_number"]').type("01517800888");
+
+    // cy.get('#edit-user-address-line-1').clear();
+    // cy.get('#edit-user-address-line-1').type("Alam Nagar").eq(0).click();
+    cy.contains('.col > .btn-primary ', "Save Changes").click();
+
+    // Click on user management
+    cy.contains(':nth-child(2) > [href="#"] > .menu-title', 'User Management').click();
+    cy.wait(3000);
+
+    // Click on users to browse the users list
+    cy.contains('.d-flex .menu-title', 'Users').click();
+
+    cy.get('#dropdown-right__BV_toggle_').click({ multiple: true } );
+
+    cy.get('#dropdown-right > .dropdown-menu > :nth-child(3) > .dropdown-item').eq(0).click();    
+    cy.wait(5000);
+    cy.get('.swal2-confirm').contains('Yes, delete it!').click();
+
+
+    // cy.contains('.btn .btn-primary', "Save Changes").click();
   });
 });
