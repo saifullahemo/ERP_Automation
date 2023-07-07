@@ -52,15 +52,15 @@ describe('User login', () => {
     cy.visit('/');
 
     // Click on user management
-    cy.contains(':nth-child(2) > [href="#"] > .menu-title', 'User Management').click({ force: true });
+    cy.contains(':nth-child(2) > [href="#"] > .menu-title', 'User Management').click();
     cy.wait(3000);
 
     // Click on users to browse the users list
-    cy.contains('.d-flex .menu-title', 'Users').click({ force: true });
+    cy.contains('.d-flex .menu-title', 'Users').click();
     cy.wait(5000);
 
     // Click on Add User to create a user
-    cy.contains('.btn-primary', 'Add User').click({ force: true, waitForAnimations: false, animationDistanceThreshold: 20 });
+    cy.contains('.btn-primary', 'Add User').click({ waitForAnimations: false, animationDistanceThreshold: 20 });
     cy.wait(5000);
 
     // Fill up the form
@@ -138,9 +138,26 @@ describe('User login', () => {
     cy.get('#payrate').clear();
     cy.get('#payrate').type('1234')
 
-    cy.get('form > .mb-sm-0').click();
+    // cy.get('form > .mb-sm-0').click();
+
+    // cy.get('#__BVID__660___BV_tab_button__', 'Information').click();
+    cy.wait(3000);
+    //cy.contains('#__BVID__589___BV_tab_button__ > .d-none', 'Information').click();
+    cy.contains('[id^="__BVID__"][id$="___BV_tab_button__"] > .d-none', 'Information').click();
 
 
-    
+    // Pick the date
+    const selectedDate1 = "20"; 
+    cy.get('.input').click(); // Open the date picker
+    cy.contains('.flatpickr-day', selectedDate1).click(); 
+
+    //
+    // cy.get('#mobile > .flex-1 > .input-tel > .input-tel__label')
+    cy.get('#mobile-872_phone_number').clear();
+    cy.get('#mobile-872_phone_number').type("01517800888");
+    cy.get('#edit-user-address-line-1').clear();
+    cy.get('#edit-user-address-line-1').type("Alam Nagar").eq(0).click();
+    //cy.get('.col > .mb-1', "Save Changes").click();
+    cy.get('.btn', "Save Changes").click();
   });
 });
