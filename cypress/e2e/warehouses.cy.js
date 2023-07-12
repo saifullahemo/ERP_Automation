@@ -29,8 +29,8 @@ describe('User login', () => {
         randomString += characters[randomIndex];
       }
 
-      const minNumber = 10000000000; // Minimum number (inclusive)
-      const maxNumber = 99999999999; // Maximum number (inclusive)
+      const minNumber = 1000000000; // Minimum number (inclusive)
+      const maxNumber = 9999999999; // Maximum number (inclusive)
       const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;    
 
 
@@ -65,7 +65,7 @@ describe('User login', () => {
     // cy.contains('.country-selector__list .flex', country).click();
     // cy.get('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list', country).click();
     // cy.contains('#warehouse-phone', country).click();
-    cy.contains('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list', country).click();
+    cy.contains('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list > .vue-recycle-scroller > .vue-recycle-scroller__item-wrapper > [style="transform: translateY(16px);"] > .flex', country).click();
 
 
     // cy.get('[id^="warehouse-phone-"][id$="_phone_number"]').type(mobileNumber);
