@@ -52,7 +52,16 @@ describe('User login', () => {
     cy.wait(3000)
 
     //Bank Update
-    cy.get('input[id^="__BVID__"]').type(`${bankName}`);
+    //cy.get('input[id^="__BVID__"]').type(bankName).click({ multiple: true } );
+    // cy.get('input[id^="__BVID__"]').each(($input) => {
+    //   cy.wrap($input).type(bankName);
+    // });
+    // cy.get('[id^="__BVID__"]').type(bankName);
+    cy.get('[id^="__BVID__"]').each(($input) => {
+      cy.wrap($input).type(bankName);
+    });
+    
+
     cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1)').click()
     cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1) > #dropdown-right > .dropdown-menu > :nth-child(1) > .dropdown-item').click();
     
