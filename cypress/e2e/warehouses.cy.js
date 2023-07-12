@@ -37,7 +37,7 @@ describe('User login', () => {
     //click on warehouses
     cy.get(':nth-child(11) > .d-flex').click();
     cy.contains('.col-md-8 > .d-flex > .btn','Add Warehouse').click();
-    cy.wait(3000);
+    cy.wait(5000);
 
     const baseName = "Sydney";
     const warehouseName = `${baseName} ${randomString}`;
@@ -65,7 +65,7 @@ describe('User login', () => {
     // cy.contains('.country-selector__list .flex', country).click();
     // cy.get('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list', country).click();
     // cy.contains('#warehouse-phone', country).click();
-    cy.get('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list > .vue-recycle-scroller > .vue-recycle-scroller__item-wrapper', country).click();
+    cy.contains('#warehouse-phone > .select-country-container > .country-selector > .country-selector__list', country).click();
 
 
     // cy.get('[id^="warehouse-phone-"][id$="_phone_number"]').type(mobileNumber);
@@ -83,7 +83,7 @@ describe('User login', () => {
 
     cy.get('#action-dropdown-right-4__BV_toggle_').click();
     cy.get('#action-dropdown-right-4 > .dropdown-menu > :nth-child(2) > .dropdown-item').click();
-
+    cy.contains('.swal2-confirm','Yes, Delete it!').click();
 
 });
 });
