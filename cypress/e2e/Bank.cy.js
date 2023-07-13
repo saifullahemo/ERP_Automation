@@ -1,5 +1,4 @@
 import './commands';
-import 'cypress-file-upload';
 
 describe('User login', () => {
   beforeEach(() => {
@@ -24,7 +23,7 @@ describe('User login', () => {
       const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;      
 
     const baseBank = "Bank";
-    const bankName = `${randomString} ${baseBank}`;
+    const bankName = `${baseBank} ${randomString} `;
     // const bankName = randomString;
     const baseAcc = "john doe";
     const accName = `${randomString} ${baseAcc}`;
@@ -51,16 +50,10 @@ describe('User login', () => {
     cy.contains('.btn', 'Add').click();
     cy.wait(3000)
 
-    //Bank Update
-    //cy.get('input[id^="__BVID__"]').type(bankName).click({ multiple: true } );
-    // cy.get('input[id^="__BVID__"]').each(($input) => {
-    //   cy.wrap($input).type(bankName);
-    // });
-    // cy.get('[id^="__BVID__"]').type(bankName);
-    cy.get('[id^="__BVID__"]').each(($input) => {
-      cy.wrap($input).type(bankName);
-    });
-    
+   
+    cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(bankName);
+    cy.wait(5000);
+
 
     cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1)').click()
     cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1) > #dropdown-right > .dropdown-menu > :nth-child(1) > .dropdown-item').click();

@@ -1,21 +1,10 @@
 import './commands';
-import 'cypress-file-upload';
 
 describe('User login', () => {
   beforeEach(() => {
     cy.login();
     cy.wait(4000);
   });
-
-  function selectRandomStore() {
-    // Get all the options in the stores dropdown
-    cy.get('.vs__dropdown-option').then(($options) => {
-      // Select a random option index
-      const randomIndex = Math.floor(Math.random() * $options.length);
-      // Click on the randomly selected option
-      cy.wrap($options[randomIndex]).click();
-    });
-  }
 
 
   it('should be created successfully', () => {
@@ -36,14 +25,14 @@ describe('User login', () => {
 
     //click on warehouses
     cy.get(':nth-child(11) > .d-flex').click();
+    cy.wait(5000);
     cy.contains('.col-md-8 > .d-flex > .btn','Add Warehouse').click();
     cy.wait(5000);
 
     const baseName = "Sydney";
     const warehouseName = `${baseName} ${randomString}`;
     const country = 'Bangladesh';
-    const mobileNumber = `1 (${randomNumber.toString().substr(0, 3)}) ${randomNumber.toString().substr(3, 3)}-${randomNumber.toString().substr(6, 4)}`;
-
+    const mobileNumber = `1 (${randomNumber.toString().substr(1, 3)}) ${randomNumber.toString().substr(4, 3)}-${randomNumber.toString().substr(7, 4)}`;
     // Base email address
     const baseEmail = 'testinguser@test.com';
     // Unique email by appending random string
@@ -52,8 +41,6 @@ describe('User login', () => {
     const suburb = 'Gulshan';
     const state = 'Dhaka';
     const postCode = '1201';
-    const tfn = '120012';
-    const payRate = '12000';
     const website = 'google.com';
 
     // fill up form
@@ -81,9 +68,17 @@ describe('User login', () => {
 
     cy.wait(5000);
 
-    cy.get('#action-dropdown-right-4__BV_toggle_').click();
-    cy.get('#action-dropdown-right-4 > .dropdown-menu > :nth-child(2) > .dropdown-item').click();
-    cy.contains('.swal2-confirm','Yes, Delete it!').click();
+    cy.get('input[id^="__BVID__"]').type(warehouseName);
+    cy.wait(5000);
+    
+    cy.contains('[id^="action-dropdown-right-"][id$="__BV_toggle_"]','Actions').click();
+    cy.contains('[id^="action-dropdown-right-"] > .dropdown-menu > :nth-child(2) > .dropdown-item', 'Delete').click();
+    cy.wait(5000);
+    cy.contains('.swal2-confirm', 'Yes, delete it!').click();
 
+
+    
 });
 });
+
+// export default warehouseName;

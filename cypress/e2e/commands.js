@@ -15,7 +15,17 @@ Cypress.Commands.add('login', () => {
     return cy.wrap(Cypress.env('loginSession'));
   });
   
+  Cypress.Commands.add('setWarehouseName', (name) => {
+    Cypress.env('warehouseName', name);
+  });
+  
 
+  Cypress.Commands.add('getWarehouseName', () => {
+    const baseName = 'Warehouse';
+    const randomString = Math.random().toString(36).substring(7);
+    const warehouseName = `${baseName} ${randomString}`;
+    return warehouseName;
+  });
 
   //** this code is used to login user from json file 
 
