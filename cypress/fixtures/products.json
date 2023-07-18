@@ -1,0 +1,38 @@
+{
+  "categories": [
+    "Electronics",
+    "Clothing",
+    "Home Decor",
+    "Sports",
+    "Beauty",
+    "Books",
+    "Toys",
+    "Furniture",
+    "Food",
+    "Automotive"
+  ],
+  "brands": [
+    "Apple",
+    "Nike",
+    "Samsung",
+    "Adidas",
+    "Sony",
+    "Canon",
+    "H&M",
+    "IKEA",
+    "Nestle",
+    "Toyota"
+  ],
+  "units": [
+    "Piece",
+    "Set",
+    "Pack",
+    "Pair",
+    "Gram",
+    "Meter",
+    "Liter",
+    "Box",
+    "Dozen",
+    "Bundle"
+  ]
+}
