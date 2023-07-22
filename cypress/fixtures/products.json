@@ -34,5 +34,17 @@
     "Box",
     "Dozen",
     "Bundle"
+  ],
+  "products": [
+    "Smartphone",
+    "Running Shoes",
+    "Desk Lamp",
+    "Lipstick",
+    "Novel",
+    "Headphones",
+    "T-Shirt",
+    "Wall Clock",
+    "Eyeshadow Palette",
+    "Mystery Novel"
   ]
 }
