@@ -90,6 +90,8 @@ describe('User login', () => {
     const brand = selectRandomBrands();
     const product = selectRandomBrands();
     const fileName = 'bank.jpg';
+    const selectedDate = '25';
+
 
 
     cy.visit('/');
@@ -159,6 +161,34 @@ describe('User login', () => {
       cy.contains('.btn-primary', 'Add').click();
       cy.wait(5000);
       
+      cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(product);
+      cy.wait(5000);
 
+      cy.contains('#dropdown-right__BV_toggle_','Actions').click();
+      cy.contains('#dropdown-group-1 > :nth-child(1) > .dropdown-item', 'Product Details').click();
+      // cy.contains('#dropdown-right > .dropdown-menu > :nth-child(5) > .dropdown-item', 'Product Details').click();
+
+      cy.get('#cost_per_unit').type('10');
+      cy.contains('.wizard-btn', 'Next').click();
+      cy.get('#replenish-level').type('12');
+
+      // Pick the date
+    cy.get('.input').click(); // Open the date picker
+    cy.contains('.flatpickr-day', selectedDate).click(); // Click on the desired date
+    cy.contains('.wizard-footer-right > span > .wizard-btn', 'Finish').click();
+
+    cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(product);
+      cy.wait(5000);
+
+      cy.get('#dropdown-group-2 > :nth-child(1) > .dropdown-item').click();
+      cy.get('#tax_id').click()
+      selectRandomStore();
+
+      cy.get('#quantity').type('1000');
+      cy.get('#sale_price_non_gst').type('188');
+      cy.contains('.wizard-btn', 'Add').click();
+
+      cy.get('#replenish-level').type('12');
+      cy.contains('.wizard-footer-right > span > .wizard-btn', 'Finish').click();
   });
 });
