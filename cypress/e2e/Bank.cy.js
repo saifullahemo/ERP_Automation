@@ -54,14 +54,18 @@ describe('User login', () => {
     cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(bankName);
     cy.wait(5000);
 
-
-    cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1)').click()
-    cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1) > #dropdown-right > .dropdown-menu > :nth-child(1) > .dropdown-item').click();
     
-    cy.get('#h-bank-name').type(bankName);
-    cy.get('#h-account-name').type(accName);
-    cy.get('#h-account-number').type(accNum);
-    cy.get('#h-account-branch').type(branch);
+    //bank deleted
+    cy.get('#dropdown-right__BV_toggle_').click();
+    cy.contains('#dropdown-right > .dropdown-menu > :nth-child(2) > .dropdown-item', 'Delete').click()
+    cy.contains('.swal2-confirm', 'Yes, delete it!').click();
+
+    // cy.get('#bank_table__row_4 > [aria-colindex="6"] > :nth-child(1) > #dropdown-right > .dropdown-menu > :nth-child(1) > .dropdown-item').click();
+    
+    // cy.get('#h-bank-name').type(bankName);
+    // cy.get('#h-account-name').type(accName);
+    // cy.get('#h-account-number').type(accNum);
+    // cy.get('#h-account-branch').type(branch);
 
   })
 
