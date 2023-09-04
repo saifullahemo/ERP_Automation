@@ -20,3 +20,4 @@ describe('User login', () => {
     cy.get('.mr-2').contains('Add').click(); // Click on Add
   });
 });
+

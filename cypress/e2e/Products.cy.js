@@ -1,194 +1,145 @@
 import './commands';
 import 'cypress-file-upload';
 
-import categoriesData from '../fixtures/products.json';
-
 describe('User login', () => {
   beforeEach(() => {
     cy.login();
     cy.wait(4000);
   });
 
-  const characters = 'abcdefghijklmnopqrstuvwxyz';
-      const desiredLength = 10; // Desired length of the random string
-      let randomString = '';
+  // Generate a random string
+  function getRandomString(length) {
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let randomString = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
+    }
+    return randomString;
+  }
 
-      for (let i = 0; i < desiredLength; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        randomString += characters[randomIndex];
-      }
-
-  function selectRandomStore() {
-    // Get all the options in the stores dropdown
-    cy.get('.vs__dropdown-option').then(($options) => {
-      // Select a random option index
+  // Select a random option from a dropdown
+  function selectRandomOption(selector) {
+    cy.get(selector).then(($options) => {
       const randomIndex = Math.floor(Math.random() * $options.length);
-      // Click on the randomly selected option
       cy.wrap($options[randomIndex]).click();
     });
   }
 
-  const minNumber = 1000000000; // Minimum number (inclusive)
-  const maxNumber = 9999999999; // Maximum number (inclusive)
-  const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;    
-
-  // + Random category selection functionality  
-  function selectRandomCategory() {
-    const categories = categoriesData.categories;
-    const randomIndex = Math.floor(Math.random() * categories.length);
-    return categories[randomIndex];
-  }
-
-  // + Random units selection functionality  
-  function selectRandomUnits() {
-    const units = categoriesData.units;
-    const randomIndex = Math.floor(Math.random() * units.length);
-    return units[randomIndex];
-  }
-
-  // + Random Brands selection functionality  
-  function selectRandomBrands() {
-    const brands = categoriesData.brands;
-    const randomIndex = Math.floor(Math.random() * brands.length);
-    return brands[randomIndex];
-  }
-
-  // + Random products selection functionality  
-  function selectRandomProducts() {
-    const products = categoriesData.products;
-    const randomIndex = Math.floor(Math.random() * products.length);
-    return products[randomIndex];
-  }
-
-
-  
   it('should be created successfully', () => {
-
-    // Generate a random string to append to the base email
-    const randomStrings = Math.random().toString(36).substring(7);
-    // Base email address
-    const baseEmail = 'test@gmail.com';
-    // Unique email by appending random string
-    const email = `${randomString} ${baseEmail}`;
-    // Unique email by appending random string
-    const name = "Hair pin";
-    // const name = `${baseStore} ${randomString}`;
-    // const mobileNumber = '01712343434';
-    const mobileNumber = `1 (${randomNumber.toString().substr(1, 3)}) ${randomNumber.toString().substr(4, 3)}-${randomNumber.toString().substr(7, 4)}`;
-
-    const skuNumber = `${randomStrings}`;
-    const barcode = `${randomString}`;
+    const randomString = getRandomString(10);
+    const email = `test_${randomString}@gmail.com`;
+    const name = getRandomString(10);
+    const mobileNumber = `1${Math.floor(Math.random() * 9000000000) + 1000000000}`;
+    const skuNumber = getRandomString(10);
+    const barcode = getRandomString(10);
     const addressLine1 = '1181/4, Gulshan-2, Dhaka';
     const suburb = 'Gulshan';
     const state = 'Dhaka';
     const postCode = '1201';
     const country = 'Bangladesh';
-    const tax = '120012';
-    const website = 'google.com';    
-    const category = selectRandomCategory();
-    const unit = selectRandomUnits();
-    const brand = selectRandomBrands();
-    const product = selectRandomBrands();
-    const fileName = 'bank.jpg';
+    const tax = getRandomString(6); // Generate a random tax
+    const website = 'google.com';
     const selectedDate = '25';
 
-
-
+  
     cy.visit('/');
 
     cy.get('.navigation > :nth-child(6) > :nth-child(1)')
-    cy.contains('.navigation > :nth-child(6) > :nth-child(1)', 'Products').click();
+    cy.contains('.navigation > :nth-child(6) > [href="#"]','Product Management').click();
 
-    //Add category
-    cy.contains(' :nth-child(4) > .d-flex > .menu-title', 'Categories').click();
-    cy.contains('.col-md-8 > .d-flex > .btn', 'Add Category').click();
+    // Add category
+    cy.contains(':nth-child(4) > .d-flex > .menu-title', 'Categories').click();
+    cy.contains('.col-md-8 > .d-flex > .btn-primary', 'Add Category').click();
+    cy.get('#category-name').type(`CategoryName_${getRandomString(5)}`); // Dynamic CategoryName
+    cy.get('#category-short-name').type(`NTL_${getRandomString(3)}`); // Dynamic NTL
+    cy.contains('.mr-2', 'Add').click();
 
-    cy.get('#category-name').type(category);
-    
-    cy.get('#category-short-name').type("NTL");
-    cy.contains('.mr-2', 'Add').click()
-    
-    //units creation
-    cy.contains(':nth-child(3) > .d-flex','Units').click()
-    cy.wait(3000)
+    // Units creation
+    cy.contains(':nth-child(3) > .d-flex', 'Units').click();
+    cy.wait(3000);
     cy.contains('.col-md-8 > .d-flex > .btn', 'Add Unit').click();
-    cy.get('#autosuggest').type(unit);
+    cy.get('#autosuggest').type(`UnitName_${getRandomString(5)}`); // Dynamic UnitName
     cy.contains('#add-new-unit-sidebar > .b-sidebar-body > :nth-child(2) > .p-2 > .mt-2 > .mr-2', 'Add').click();
-    
-    //  Brands creation
+
+    // Brands creation
     cy.contains(':nth-child(2)', 'Brands').click();
     cy.contains('.col-md-8 > .d-flex > .btn', 'Add Brand').click();
-    cy.get('#brand-name').type(brand);
-    cy.contains('#add-new-brand-sidebar > .b-sidebar-body > :nth-child(2) > .p-2 > .mt-2 > .mr-2', 'Add').click()
-    cy.wait(3000)
+    cy.get('#brand-name').type(`BrandName_${getRandomString(5)}`); // Dynamic BrandName
+    cy.contains('#add-new-brand-sidebar > .b-sidebar-body > :nth-child(2) > .p-2 > .mt-2 > .mr-2', 'Add').click();
+    cy.wait(3000);
 
-    //Products list creation
-    cy.contains(':nth-child(1)', 'Product List').click();
+    // Products list creation
+    cy.contains('#__BVID__134 > :nth-child(1) > .d-flex','Product').click();
     cy.contains('.col-md-8 > .d-flex > .btn', 'Add Product').click();
-    cy.get('#sku-number').type(skuNumber)
-    cy.get('#product-name').type(product);
+    cy.get('#sku-number').type(skuNumber);
+    cy.get('#product-name').type(name);
     cy.get('#product-barcode').type(barcode);
+
+    // Assuming these are the correct selectors for store dropdowns
     cy.get('#vs7__combobox').click();
-    selectRandomStore();
-    
+    selectRandomOption('.vs__dropdown-option');
     cy.get('#vs8__combobox').click();
-    selectRandomStore();
-    
+    selectRandomOption('.vs__dropdown-option');
     cy.get('#vs9__combobox').click();
-    selectRandomStore();
-    
+    selectRandomOption('.vs__dropdown-option');
     cy.get('#vs10__combobox').click();
-    selectRandomStore();
-    
+    selectRandomOption('.vs__dropdown-option');
     cy.get('#vs11__combobox').click();
-    selectRandomStore();
+    selectRandomOption('.vs__dropdown-option');
 
-
-      // Upload file
-      cy.contains('#add-new-product-sidebar > .b-sidebar-body > :nth-child(2) > .px-2 > :nth-child(9) > .col > .media > .media-body > .d-flex > .btn-primary', 'Upload').invoke('removeAttr', 'style');
-      cy.fixture(fileName, 'binary').then(fileContent => {
-        cy.get('.btn').attachFile({
-          fileContent,
-          fileName,
-          mimeType: 'image/jpeg'
-        });
+    // Upload file
+    cy.contains('#add-new-product-sidebar > .b-sidebar-body > :nth-child(2) > .px-2 > :nth-child(9) > .col > .media > .media-body > .d-flex > .btn-primary', 'Upload').invoke('removeAttr', 'style');
+    cy.fixture('bank.jpg', 'binary').then(fileContent => {
+      cy.get('.btn').attachFile({
+        fileContent,
+        fileName: 'bank.jpg',
+        mimeType: 'image/jpeg'
       });
-  
-      // Wait for a reasonable amount of time for the file to be uploaded
-      cy.wait(5000);
-  
-      // Add user
-      cy.contains('.btn-primary', 'Add').click();
-      cy.wait(5000);
-      
-      cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(product);
-      cy.wait(5000);
+    });
+    
+    // Wait for a reasonable amount of time for the file to be uploaded
+    cy.wait(5000);
 
-      cy.contains('#dropdown-right__BV_toggle_','Actions').click();
-      cy.contains('#dropdown-group-1 > :nth-child(1) > .dropdown-item', 'Product Details').click();
-      // cy.contains('#dropdown-right > .dropdown-menu > :nth-child(5) > .dropdown-item', 'Product Details').click();
+    // Add user
+    cy.contains('.btn-primary', 'Add').click();
+    cy.wait(5000);
 
-      cy.get('#cost_per_unit').type('10');
-      cy.contains('.wizard-btn', 'Next').click();
-      cy.get('#replenish-level').type('12');
+    // Find and interact with the added product
+    cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(name);
+    cy.wait(5000);
 
-      // Pick the date
+    // Assuming there is a dropdown for actions on the product
+    cy.contains('#dropdown-right__BV_toggle_', 'Actions').click();
+    cy.contains('#dropdown-group-1 > :nth-child(1) > .dropdown-item', 'Product Details').click();
+
+    // Assuming there's an input field with the id 'cost_per_unit'
+    cy.get('#cost_per_unit').type('10');
+    cy.contains('.wizard-btn', 'Next').click();
+    cy.get('#replenish-level').type('12');
+
+    // Pick the date
     cy.get('.input').click(); // Open the date picker
     cy.contains('.flatpickr-day', selectedDate).click(); // Click on the desired date
     cy.contains('.wizard-footer-right > span > .wizard-btn', 'Finish').click();
 
-    cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(product);
-      cy.wait(5000);
+    // Assuming you need to search for the added product again
+    cy.get('.d-flex.align-items-center.justify-content-start.mb-1.mb-md-0.col-md-4.col-12 input.d-inline-block.mr-1.form-control').type(name);
+    cy.wait(5000);
 
-      cy.get('#dropdown-group-2 > :nth-child(1) > .dropdown-item').click();
-      cy.get('#tax_id').click()
-      selectRandomStore();
+    // // Assuming there's another dropdown for actions
+    // cy.get('#dropdown-right__BV_toggle_').click();
 
-      cy.get('#quantity').type('1000');
-      cy.get('#sale_price_non_gst').type('188');
-      cy.contains('.wizard-btn', 'Add').click();
+    // // Assuming there's an input field with the id 'tax_id'
+    // cy.get('#tax_id').click();
+    // selectRandomOption('#tax_id'); // Select a random option from the dropdown
 
-      cy.get('#replenish-level').type('12');
-      cy.contains('.wizard-footer-right > span > .wizard-btn', 'Finish').click();
+    // // Assuming there are input fields with the ids 'quantity' and 'sale_price_non_gst'
+    // cy.get('#quantity').type('1000');
+    // cy.get('#sale_price_non_gst').type('188');
+    // cy.contains('.wizard-btn', 'Add').click();
+
+    // cy.get('#replenish-level').type('12');
+    // cy.contains('.wizard-footer-right > span > .wizard-btn', 'Finish').click();
   });
 });

@@ -1,5 +1,4 @@
 import './commands';
-
 describe('User login', () => {
   beforeEach(() => {
     cy.login();

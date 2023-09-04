@@ -1,57 +1,27 @@
-
 Cypress.Commands.add('login', () => {
-    
-    cy.visit('/login');
-
-    // Perform login actions here
-    cy.get('#login-email').type('test@ecom.com');
-    cy.get('#login-password').type('password');
-
-    // Submit the login form
-    cy.get('.btn-primary').click();
-  });
-  
-  Cypress.Commands.add('getSession', () => {
-    return cy.wrap(Cypress.env('loginSession'));
-  });
-  
-  Cypress.Commands.add('setWarehouseName', (name) => {
-    Cypress.env('warehouseName', name);
-  });
-  
-
-  Cypress.Commands.add('getWarehouseName', () => {
-    const baseName = 'Warehouse';
-    const randomString = Math.random().toString(36).substring(7);
-    const warehouseName = `${baseName} ${randomString}`;
-    return warehouseName;
-  });
-
-  //** this code is used to login user from json file 
-
-  // beforeEach(() => {
-  //   cy.fixture('users.json').as('users'); // Assign the fixture data to the "users" alias
-  // });
-  
-  // Cypress.Commands.add('login', () => {
-  //   it('Test Case', () => {
-  //     cy.visit('/');
-  //     cy.get('@users').then((users) => {
-  //       users.forEach((user) => {
-  //         cy.wrap(user).as('currentUser'); // Assign the current user to the "currentUser" alias
-  //         cy.get('@currentUser').then((currentUser) => {
-  //           cy.get('#Email').type(currentUser.email || '');
-  //           cy.get('#Password').type(currentUser.password || '');
-  //           // Add any additional actions or assertions after login
-  //           // ...
-  //           // Complete the entire test case before moving on to the next user
-  //           // ...
-  //         });
-  //       });
-  //     });
-  //   });
-  // });
-  
-  // Cypress.Commands.add('getSession', () => {
-  //   return cy.wrap(Cypress.env('loginSession'));
-  // });
+ cy.visit('/login');
+//  cy.visit('https://stage.ayersfood.com/login');
+  // Perform login actions here
+  cy.get('#login-email').type('test@ecom.com');
+  cy.get('#login-password').type('password');
+  // Submit the login form
+  cy.get('.btn-primary').click();
+});
+Cypress.Commands.add('getSession', () => {
+  return cy.wrap(Cypress.env('loginSession'));
+});
+Cypress.Commands.add('setWarehouseName', (name) => {
+  Cypress.env('warehouseName', name);
+});
+Cypress.Commands.add('getWarehouseName', () => {
+  const baseName = 'Warehouse';
+  const randomString = Math.random().toString(36).substring(7);
+  const warehouseName = `${baseName} ${randomString}`;
+  return warehouseName;
+});
+// commands.js
+Cypress.Commands.add("selectDropdownOption", (dropdownSelector, optionIndex) => {
+cy.get(dropdownSelector).click();
+cy.get(".vs__dropdown-menu", { timeout: 10000 }).should("be.visible");
+cy.get(".vs__dropdown-option", { timeout: 10000 }).eq(optionIndex).click();
+});

@@ -20,7 +20,7 @@ describe('User login', () => {
       it('should be created successfully', () => {
         cy.visit('/');
 
-        cy.contains(':nth-child(9) > .d-flex', 'Tax').click();
+        cy.contains(':nth-child(11) > .d-flex', 'Tax').click();
         cy.contains('.col-md-8 > .d-flex > .btn', 'Add TAX').click();
         cy.get('#tax-title').type(taxName);
         cy.get('#tax-percentage').type(15);

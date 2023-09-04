@@ -59,8 +59,7 @@ describe('User login', () => {
 
 
     cy.visit('/');
-
-    cy.contains(':nth-child(10) > .d-flex', 'Stores').click();
+    cy.contains(':nth-child(12) > .d-flex', 'Stores').click();
     cy.contains('.col-md-8 > .d-flex > .btn', 'Add Store').click();
     cy.get('#store-name').type(name);
     cy.get('#warehouse-name').click();

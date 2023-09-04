@@ -6,6 +6,6 @@ describe('Login', () => {
   });
 
   it('should be authenticated across tests', () => {
-      cy.url().should('eq', '/')
+      cy.url().should('eq', 'https://stage.ayersfood.com/');
   });
 });
